@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+'use strict'
+const args = require('minimist')(process.argv.slice(2))
+const Parser = require('../lib/Parser.js')
+const fs = require('fs')
+const Push = require('../lib/engines/Push.js')
+
+if(args.help || args.h) {
+  let stream = fs.createReadStream(`${__dirname}/hamltohtml`)
+  stream.pipe(process.stdout)
+  stream.on('end', () => process.exit(0))
+  return
+}
+
+let hamltohtml = new Parser({engine: new Push()})
+
+let output = process.stdout
+
+if(args._[0]) {
+  output = fs.createWriteStream(args._[0]) 
+}
+
+process.stdin.setEncoding('utf8')
+
+process.stdin
+.pipe(hamltohtml)
+.pipe(output)

@@ -1,0 +1,7 @@
+%p!= 'this will not be <strong>encoded</strong>'
+%p{class: 'test'}= 'this will be <strong>encoded</strong>'
+&= 'this & is encoded'
+!= test
+%p
+  %span= test
+  = test

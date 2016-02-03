@@ -1,0 +1,6 @@
+%ul.left
+  %li{ui: {sref: '{{parentState}}', sref_active: 'active'}, ng_if: 'parentState && parentState !== $state.current.name'}
+    %a
+      %i.icon-left {{$state.current.name | breadCrumb : $state.current.name}}
+  -# %li{ng: {repeat: 'sidenavItem in sidenavItems', class: '{active: $state.current.name.indexOf(sidenavItem.href) !== -1}'}, ui: {sref: '{{sidenavItem.href}}'}}
+  -#   %a{target: '{{sidenavItem.blank ? "_blank" : ""}}'} {{sidenavItem.title}}

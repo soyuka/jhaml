@@ -1,0 +1,118 @@
+%form
+  .grid-block
+    .small-12.medium-6.grid-content
+      .grid-block
+        .grid-content.small-12
+          %table.hover
+            %tbody
+              %tr
+                %td Statut gamme DS
+                %td En cours d'arrêt
+                %td 01/10/2015
+              %tr
+                %td Statut gamme DS
+                %td En cours d'arrêt
+                %td 01/10/2015
+              %tr
+                %td Statut gamme DS
+                %td En cours d'arrêt
+                %td 01/10/2015
+
+    .small-12.medium-6.grid-content
+      .grid-block
+        .small-9.medium-9.grid-content
+          %label
+            Descriptif
+            %textarea{ng_model: 'product.current.description', 
+            bdr_disabled: 'product.disabled()'}
+          %label
+            Origine
+            %input{type: 'text', ng_model: 'product.current.technicalSheet.origin', 
+            bdr_disabled: 'product.disabled()'} 
+        .small-3.medium-3.grid-content
+          %img{src: 'images/logo.png'}
+      .small-12.medium-12.grid-block
+        .medium-3.grid-content
+          %label
+            Portion
+            %input{type: 'text', ng_model: 'product.current.portion', 
+            bdr_disabled: 'product.disabled()'}
+        .small-3.grid-content
+          %label
+            Calibre
+            %input{type: 'text', placeholder: '30 g.', 
+            ng_model: 'product.current.caliber', bdr_disabled: 'product.disabled()'}
+        .small-6.grid-content
+          %bdr_label{labels: 'unit_of_measures', filter: 'product.allowedUnits', 
+          ng_model: 'product.current.unitOfMeasure', bdr_disabled: 'product.disabled()'}
+
+      .grid-block.small-12
+        .small-12.grid-content
+          %label
+            Descriptif conditionnement
+            %input{type: 'text', placeholder: 'Carton de 4 x 2,5 kg', 
+            ng_model: 'product.current.packagingDescription', bdr_disabled: 'product.disabled()'}
+
+  %div{zf_tabs: true, vertical: true}
+    %div{zf_tab: true, title: 'DISVAL'}
+      .grid-block
+        .small-6.grid-content
+          %p
+            D
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+            vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+        .small-6.grid-content
+          %p
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+            vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    %div{zf_tab: true, title: 'DSRA'}
+      .grid-block
+        .small-6.grid-content
+          %p
+            Dsra
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+            vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+        .small-6.grid-content
+          %p
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+            vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    %div{zf_tab: true, title: 'ARMO'}
+      .grid-block
+        .small-6.grid-content
+          %p
+            armo
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+            vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+        .small-6.grid-content
+          %p
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+            vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    %div{zf_tab: true, title: 'SIRF'}
+      .grid-block
+        .small-6.grid-content
+          %p
+            sirf
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+            vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+        .small-6.grid-content
+          %p
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+            vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+      
+  %hr

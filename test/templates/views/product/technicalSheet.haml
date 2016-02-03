@@ -1,0 +1,118 @@
+.grid-block
+  .grid-content.medium-6
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle Fournisseur
+      .grid-content.medium-9
+        %input{type: 'text', ng_model: 'product.current.technicalSheet.supplier',
+          bdr_disabled: 'product.disabled()'}
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle Élaboré en
+      .grid-content.medium-9
+        %input{type: 'text', ng_model: 'product.current.technicalSheet.processedIn',
+          bdr_disabled: 'product.disabled()'}
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle Espèce
+      .grid-content.medium-9
+        %input{type: 'text', ng_model: 'product.current.technicalSheet.species',
+          bdr_disabled: 'product.disabled()'}
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle Agrément sanitaire
+      .grid-content.medium-9
+        %input{type: 'text', ng_model: 'product.current.technicalSheet.packingCode',
+          bdr_disabled: 'product.disabled()'}
+        .help-text Code emballeur
+
+  .grid-content.medium-6
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle Ingrédients
+      .grid-content.medium-9
+        %textarea{ng_model: 'product.current.technicalSheet.ingredients',
+          bdr_disabled: 'product.disabled()'}
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle Conseils de mise en &oelig;uvre
+      .grid-content.medium-9
+        %textarea{ng_model: 'product.current.cookingInstructions',
+          bdr_disabled: 'product.disabled()'}
+    .grid-block.align-right
+      .grid-content.medium-3
+        %label.text-right.middle Conservation
+      .grid-content.medium-3
+        %input{type: 'text', ng_model: 'product.current.technicalSheet.conservation',
+          bdr_disabled: 'product.disabled()'}
+      .grid-content.medium-3
+        %bdr_inline_label{labels: 'product_expiration_type_labels', 
+          ng_model: 'product.current.technicalSheet.expirationType["@id"]', title: '',
+          bdr_disabled: 'product.disabled()'}
+      .grid-content.medium-3
+        %input{type: 'text', ng_model: 'product.current.technicalSheet.expirationLength',
+          bdr_disabled: 'product.disabled()'}
+    %bdr_inline_label.grid-block{labels: 'product_gemrcns',
+              ng_model: 'product.current.technicalSheet.gemrcn["@id"]', bdr_disabled: 'product.disabled()'}
+
+%h4 Nutritions
+      
+%table
+  %tbody{ng_repeat: 'row in technicalSheet.nutritionMaxRows'}
+    %tr
+      %th{ng_repeat: 'nutrition in technicalSheet.nutritions|limitTo:row.limit:row.from'} {{::nutrition.nutrition.name}}
+    %tr
+      %td{ng_repeat: 'nutrition in technicalSheet.nutritions|limitTo:row.limit:row.from'}
+        %span.inline-label
+          %input{type: 'text', ng_model: 'nutrition.value', bdr_disabled: 'product.disabled()'}
+          %span.form-label
+            {{::nutrition.nutrition.unit}}
+
+.grid-block.align-right
+  .grid-content.medium-4
+    %bdr_inline_label.grid-block{labels: 'product_nutritions',
+      title: 'Ajouter une valeur nutritionelle',
+      ng_change: 'technicalSheet.add("nutrition")',
+      ng_model: 'technicalSheet.nutritionLabel',
+      filter: 'technicalSheet.available("nutrition")',
+      ng_if: '!product.disabled()'}
+
+%h4 Allergènes
+
+%table
+  %tbody{ng_repeat: 'row in technicalSheet.allergenMaxRows'}
+    %tr
+      %th{ng_repeat: 'allergen in technicalSheet.allergens|limitTo:row.limit:row.from'} {{::allergen.allergen.name}}
+    %tr
+      %td{ng_repeat: 'allergen in technicalSheet.allergens|limitTo:row.limit:row.from'}
+        %bdr_inline_label.grid-block{labels: 'product_allergen_value_labels',
+          ng_model: 'allergen.allergenValueLabel["@id"]', title: '',
+          bdr_disabled: 'product.disabled()'}
+
+.grid-block.align-right
+  .grid-content.medium-4
+    %bdr_inline_label.grid-block{labels: 'product_allergens',
+      title: 'Ajouter un allergène', ng_change: 'technicalSheet.add("allergen")',
+      ng_model: 'technicalSheet.allergenLabel',
+      filter: 'technicalSheet.available("allergen")', 
+      ng_if: '!product.disabled()'}
+
+%h4 Caractéristiques microbiologiques (UFC/g) et chimiques
+
+%table
+  %tbody{ng_repeat: 'row in technicalSheet.microbiologicalMaxRows'}
+    %tr
+      %th{ng_repeat: 'microbiological in technicalSheet.microbiologicals|limitTo:row.limit:row.from'} {{::microbiological.microbiological.name}}
+    %tr
+      %td{ng_repeat: 'microbiological in technicalSheet.microbiologicals|limitTo:row.limit:row.from'}
+        %input{type: 'text', ng_model: 'microbiological.value', 
+          bdr_disabled: 'product.disabled()'}
+
+.grid-block.align-right
+  .grid-content.medium-4
+    %bdr_inline_label.grid-block{labels: 'product_microbiologicals',
+      title: 'Ajouter une information microbiologique',
+      ng_change: 'technicalSheet.add("microbiological")',
+      ng_model: 'technicalSheet.microbiologicalLabel',
+      filter: 'technicalSheet.available("microbiological")',
+      ng_if: '!product.disabled()'}

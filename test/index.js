@@ -1,0 +1,2 @@
+describe('haml', function() {
+})

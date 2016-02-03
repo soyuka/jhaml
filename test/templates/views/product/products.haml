@@ -1,0 +1,36 @@
+.grid-block{ng_if: 'product.new'}
+  .medium-3.grid-content
+    %label
+      Catégorie
+      %ui-select{ng_if: 'product.new', multiple: true, ng_model: 'product.current.category', theme: 'select2'}
+        %ui-select-match{placeholder: 'Sélectionnez une catégorie'}
+          %img{ng_src: 'images/{{$item.slug.toLowerCase()}}.png'}
+          {{$item.name}}
+        %ui-select-choices{repeat: 'category in $parent.product.category'}
+          %img{ng_src: 'images/{{category.slug.toLowerCase()}}.png'}
+          {{category.name}}
+  .medium-2.grid-content
+    %label{ng_class: '{"is-invalid-label": !product.isCodeValid}'}
+      Code
+      %input{type: 'text', ng_model: 'product.current.code', ng_change: 'product.checkCodeExists()', ng_model_options: '{debounce: 500}', ng_class: '{"is-invalid-input": !product.isCodeValid}'}
+      %span.form-error{ng_class: '{"is-visible": !product.isCodeValid}'} Le code est déjà utilisé
+  .grid-content.medium-3{ng_if: 'product.new'}
+    %label
+      Nom produit
+      %input{type: 'text', ng_model: 'product.current.billingName'}
+  .grid-content.medium-3{ng_if: 'product.new'}
+    %label
+      Désignation commerciale
+      %input{type: 'text', ng_model: 'product.current.name'}
+
+.grid-block{ng_if: '!product.new'}
+  .small-2.medium-1.grid-content
+    %label.text-right.middle{for: 'search'}
+      %img{ng_if: 'product.current', ng_src: 'images/{{product.current.category[0].slug.toLowerCase()}}.png'}
+      {{product.current.code}}
+  .small-10.medium-11.grid-content
+    %bdr-search{select: 'product.select', search: 'product.search', cancel: 'product.cancel', value: 'product.current.name'}
+
+%hr
+
+%div{ui_view: true}

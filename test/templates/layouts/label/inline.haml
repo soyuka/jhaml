@@ -1,0 +1,6 @@
+%div
+  .grid-content.small-3{ng_if: 'title'}
+    %label.middle.text-right
+      {{::title}}
+  .grid-content{ng_class: "{'small-9': title, 'small-12': !title}"}
+    %bdr_select_label{bdr_labels: '{{::labels}}'}

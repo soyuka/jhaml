@@ -1,0 +1,28 @@
+Line:
+        EOL AND does not end with ","
+Attribute:
+        Between "{" and "}", simple json parsing 
+        Exceptions for class (starts with ".") and id (starts with "#")
+Element:
+        %el - implicit div if none
+Content:
+        " " content
+
+Evaluation:
+        = escaped
+        != unescaped
+
+Filters:
+        Starts with ":"
+
+String interpolation #{}
+
+Comments: -#
+
+Escaping \somedata
+
+---
+
+useless:
+  Self closing %br/
+  Whitespace removal: > and <

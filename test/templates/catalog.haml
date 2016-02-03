@@ -1,0 +1,93 @@
+.grid-block
+  .grid-content.medium-6
+    %bdr_inline_label.grid-block{labels: 'product_brands', 
+      ng_model: 'product.current.brand', title: 'Marque', bdr_disabled: 'product.disabled()'}
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle
+          Tags
+      .grid-content.medium-9
+        %ui-select{multiple: true, tagging: true, tagging_label: '', 
+          ng_model: 'product.current.tags', theme: 'select2', 
+          bdr_disabled: 'product.disabled()'}
+          %ui-select-match {{$item}}
+          %ui-select-choices{repeat: 'tag in product.current.tags'}
+            {{tag}}
+
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle
+          Labels de qualité
+      .grid-content.medium-9
+        %ui-select{bdr_labels: 'product_quality_labels', 
+          ng_model: 'product.current.qualityLabel', multiple: true, theme: 'select2',
+          bdr_disabled: 'product.disabled()'}
+          %ui-select-match {{$item.name}}
+          %ui-select-choices{repeat: 'label in labels'}
+            {{label.name}}
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle
+          Labels de vente
+      .grid-content.medium-9
+        %ui-select{bdr_labels: 'product_sales_labels',
+          ng_model: 'product.current.salesLabel', multiple: true, theme: 'select2',
+          bdr_disabled: 'product.disabled()'}
+          %ui-select-match {{$item.name}}
+          %ui-select-choices{repeat: 'label in labels'}
+            {{label.name}}
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle
+          Descriptif
+      .grid-content.medium-9
+        %textarea{ng_model: 'product.current.technicalSheet.description',
+          bdr_disabled: 'product.disabled()'}
+    .grid-block.align-right
+      .grid-content.medium-9
+        %label
+          %input{type: 'checkbox', ng_model: 'product.current.TODO', bdr_disabled: 'product.disabled()'}
+          Précommande théorique
+    .grid-block
+      %bdr_inline_label.grid-block{labels: 'product_marketing_families',
+        ng_model: 'product.current.marketingFamily["@id"]', recursive: true, 
+        bdr_disabled: 'product.disabled()'}
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle
+          Coeff coût portion
+      .grid-content.medium-3
+        %input{type: 'number', ng_model: 'product.current.portionPriceCoef', 
+          bdr_disabled: 'product.disabled()'}
+      .grid-content.medium-6
+        %label.middle
+          %strong soit
+          %span 0.131 &euro; la part
+
+
+  .grid-content.medium-6
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle
+          Supports privilégiés
+      .grid-content.medium-9
+        %input{type: 'text', ng_model: 'product.current.TODO',
+          bdr_disabled: 'product.disabled()'}
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle
+          Argu catalogue
+      .grid-content.medium-9
+        %textarea{ng_model: 'product.current.benefits', bdr_disabled: 'product.disabled()'}
+        %p.help-text
+          Ancien informations produit
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle + produit
+      .grid-content.medium-9
+        %textarea{ng_model: 'product.current.pitch', bdr_disabled: 'product.disabled()'}
+    .grid-block
+      .grid-content.medium-3
+        %label.text-right.middle Idée recette
+      .grid-content.medium-9
+        %textarea{ng_model: 'product.current.recipe_idea', bdr_disabled: 'product.disabled()'}

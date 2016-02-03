@@ -1,0 +1,4 @@
+%li.has-form
+  %ul.button-group
+    %nav_button{ng: {repeat: 'sidenavButton in sidenavButtons'}, nav: {click: '{{sidenavButton.click}}', options: 'sidenavButton.options'}}
+      %span.button.tiny{class: '{{sidenavButton.class}}', ng_bind_html: 'sidenavButton.content'}

@@ -1,0 +1,237 @@
+%h2 
+  Conditionnements 
+
+.grid-content
+  .notification.warning.active{ng_class: '{show: !packaging.isValid()}'}
+    Il doit y avoir un et un seul conditionnement par défaut.
+
+.grid-content
+  %div{style: 'display: flex'}
+    .tabs.vertical
+      .tab-item{ng_repeat: 'p in packaging.current',
+        ng_class: '{"is-active": packaging.isActive($index)}',
+        ng_click: 'packaging.setCurrent($index)'}
+        {{'#' + ($index + 1)}}
+        %i.icon-star{ng_if: 'p.isDefault'}
+      .tab-item.has-button.text-center
+        %a.button{ng_click: 'packaging.add()', ng_if: '!product.disabled()'}
+          %i.icon-plus-squared
+    .tab-contents.vertical
+      .tab-content{ng_repeat: 'p in packaging.current', 
+        ng_class: '{"is-active": packaging.isActive($index)}',
+        ng_controller: 'ProductCurrentPackagingCtrl as package'}
+
+        %ul.button-group.float-right{ng_if: '!product.disabled()'}
+          %li
+            %a.favorite{ng_click: 'p.isDefault = !p.isDefault', ng_class: '{active: p.isDefault}'}
+              %i.icon-star
+          %li
+            %a{ng_click: 'packaging.remove(p)'}
+              %i.icon-trash
+
+        %h3 Présentation
+        .grid-block
+          .medium-4.grid-content
+            %bdr_inline_label.grid-block{labels: 'product_packaging_wrap_labels',
+              ng_model: 'package.packagingWrapLabel["@id"]',
+              bdr_disabled: 'product.disabled()'}
+          .medium-3.grid-content
+            %bdr_inline_label.grid-block{labels: 'product_weight_variations',
+              ng_model: 'package.weightVariationType["@id"]',
+              bdr_disabled: 'product.disabled()'}
+          .medium-5.grid-content
+            .grid-block
+              .medium-3.grid-content.text-right
+                %label.middle
+                  Variation
+              .medium-3.grid-content
+                %input{type: 'number', value: '0',
+                  ng_model: 'package.weightVariationAmount',
+                  bdr_disabled: 'product.disabled()'}
+              .medium-1.grid-content
+                %label.middle
+                  g
+              .medium-5.grid-content
+                %label
+                  %input{type: 'checkbox', ng_model: 'package.unpackable', 
+                    bdr_disabled: 'product.disabled()'}
+                  Détaillable
+        %hr
+
+        %h3 Unités
+
+        .grid-block
+          .medium-5.grid-content
+            %bdr_inline_label.grid-block{labels: 'product_portion_labels',
+              ng_model: 'package.useUnit["@id"]',
+              title: 'Unité de consommation', ng_change: 'updateUnit("useUnit")',
+              bdr_disabled: 'product.disabled()'}
+        .grid-block
+          .medium-5.grid-content
+            %bdr_inline_label.grid-block{labels: 'product_unit_labels',
+              ng_model: 'package.detailUnit["@id"]', title: 'Unité détail',
+              ng_change: 'updateUnit("detailUnit")', 
+              bdr_disabled: 'product.disabled()'}
+        .grid-block
+          .medium-5.grid-content
+            %bdr_inline_label.grid-block{labels: 'product_unit_labels', 
+              ng_model: 'package.middleUnit["@id"]', title: 'Unité intermediaire',
+              ng_change: 'updateUnit("middleUnit")', bdr_disabled: 'product.disabled()'}
+          .medium-5.grid-content
+            %bdr_inline_label.grid-block{labels: 'product_unit_labels',
+              ng_model: 'package.caseUnit["@id"]', title: 'Unité carton',
+              ng_change: 'updateUnit("caseUnit")', 
+              ng_disabled: 'product.disabled()', filter: 'package.allowedCaseUnits'}
+        .grid-block
+          .medium-5.grid-content
+            %bdr_inline_label.grid-block{labels: 'product_unit_labels',
+              ng_model: 'package.layerUnit["@id"]', title: "Unité couche",
+              ng_change: 'updateUnit("layerUnit")',
+              bdr_disabled: 'product.disabled()', filter: 'package.allowedLayerUnits'}
+          .medium-5.grid-content
+            %bdr_inline_label.grid-block{labels: 'product_unit_labels',
+              ng_model: 'package.palletUnit["@id"]', title: "Unité palette",
+              ng_change: 'updateUnit("palletUnit")',
+              bdr_disabled: 'product.disabled()', filter: 'package.allowedPalletUnits'}
+
+        %hr
+        
+        .grid-block
+          .medium-8.grid-content
+            %h3 
+              Coefficients
+          .medium-2.grid-content
+            %label.middle
+              Plus petite unité détaillable
+          .medium-2.grid-content
+            %bdr_inline_label.grid-block{labels: 'product_unit_labels',
+              ng_model: 'package.smallestUnpackable["@id"]',
+              title: '', bdr_disabled: 'product.disabled()',
+              filter: 'package.allowedSmallestUnpackable'}
+
+        .grid-block.fake-table.small-up-5.align-center
+
+          -# detail unit
+          .grid-content
+            .grid-block
+              .grid-content
+                %label{for: 'smallestUnpackableDetail'}
+                  {{package.detailUnit.name}}
+            .grid-block
+              .grid-content
+                %span.inline-label
+                  %span.form-label
+                    env.
+                  %input{type: 'number', step: 'any', 
+                    ng_model: 'package.useUnitPerDetailUnit',
+                    ng_change: 'package.updateWeight("detailUnit")',
+                    bdr_disabled: 'product.disabled()'}
+                  %span.form-label
+                    {{package.previousUnit('detailUnit').name}}
+            .grid-block
+              .grid-content
+                %span.inline-label
+                  %input{type: 'number', step: 'any', 
+                    ng_model: 'package.detailUnitWeight',
+                    ng_change: 'package.updateWeight("detailUnit")',
+                    bdr_disabled: 'product.disabled()'}
+                  %span.form-label
+                    Kg
+            
+          .grid-content{ng_if: 'package.middleUnit["@id"] != package.caseUnit["@id"]'}
+            .grid-block
+              .grid-content
+                %label{for: 'smallestUnpackableMiddle'}
+                  {{package.middleUnit.name}}
+            .grid-block
+              .grid-content
+                %span.inline-label
+                  %input{type: 'number', step: 'any',
+                    ng_model: 'package.detailUnitPerMiddleUnit',
+                    ng_change: 'package.updateWeight("detailUnit")',
+                    bdr_disabled: 'product.disabled()'}
+                  %span.form-label
+                    {{package.previousUnit('middleUnit').name}}
+            .grid-block
+              .grid-content
+                %span.inline-label
+                  %input{type: 'number', step: 'any',
+                    ng_model: 'package.middleUnitWeight',
+                    ng_change: 'package.updateWeight("middleUnit")',
+                    bdr_disabled: 'product.disabled()'}
+                  %span.form-label
+                    Kg
+
+          .grid-content
+            .grid-block
+              .grid-content
+                %label{for: 'smallestUnpackableCT'}
+                  {{package.caseUnit.name}}
+            .grid-block
+              .grid-content
+                %span.inline-label
+                  %input{type: 'number', step: 'any',
+                    ng_model: 'package.middleUnitPerCaseUnit',
+                    ng_change: 'package.updateMiddleUnit() && package.updateWeight("middleUnit")',
+                    bdr_disabled: 'product.disabled()'}
+                  %span.form-label
+                    {{package.previousUnit('caseUnit').name}}
+            .grid-block
+              .grid-content
+                %span.inline-label
+                  %input{type: 'number', step: 'any',
+                    ng_model: 'package.caseUnitWeight',
+                    ng_change: 'package.updateWeight("caseUnit")',
+                    bdr_disabled: 'product.disabled()'}
+                  %span.form-label
+                    Kg
+
+          .grid-content
+            .grid-block
+              .grid-content
+                %label{for: 'smallestUnpackableCP'}
+                  {{package.layerUnit.name}}
+            .grid-block
+              .grid-content
+                %span.inline-label
+                  %input{type: 'number', step: 'any',
+                    ng_model: 'package.caseUnitPerLayerUnit',
+                    ng_change: 'package.updateWeight("caseUnit")',
+                    bdr_disabled: 'product.disabled()'}
+                  %span.form-label
+                    {{package.previousUnit('layerUnit').name}}
+            .grid-block
+              .grid-content
+                %span.inline-label
+                  %input{type: 'number', step: 'any',
+                    ng_model: 'package.layerUnitWeight',
+                    ng_change: 'package.updateWeight("layerUnit")',
+                    bdr_disabled: 'product.disabled()'}
+                  %span.form-label
+                    Kg
+
+          .grid-content
+            .grid-block
+              .grid-content
+                %label{for: 'smallestUnpackablePT'}
+                  {{package.palletUnit.name}}
+            .grid-block
+              .grid-content
+                %span.inline-label
+                  %input{type: 'number', step: 'any',
+                    ng_model: 'package.layerUnitPerPalletUnit',
+                    ng_change: 'package.updateWeight("layerUnit")', 
+                    bdr_disabled: 'product.disabled()'}
+                  %span.form-label
+                    {{package.previousUnit('palletUnit').name}}
+            .grid-block
+              .grid-content
+                %span.inline-label
+                  %input{type: 'number', step: 'any',
+                    ng_model: 'package.palletUnitWeight',
+                    ng_change: 'package.updateWeight("palletUnit")',
+                    bdr_disabled: 'product.disabled()'}
+                  %span.form-label
+                    Kg
+
+%br

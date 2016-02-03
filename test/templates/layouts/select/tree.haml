@@ -1,0 +1,4 @@
+%select
+  %option{ng_repeat: 'node in tree', value: '{{::node["@id"]}}'}
+    {{ '-' | repeat: node.level}}
+    {{::node.name}} 

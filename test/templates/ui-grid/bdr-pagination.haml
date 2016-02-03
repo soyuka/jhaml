@@ -1,0 +1,18 @@
+%div.ui-grid-pager-panel{role: 'contentinfo', ui_grid_pager: true, ng_show: 'grid.options.enablePaginationControls'}
+  %ul.pagination.text-center{role: 'navigation', aria_label: 'Pagination'}
+    %li{ng_class: '{disabled: cantPageBackward()}', role: 'menuitem', ui_grid_one_bind_title: 'aria.pageBack', ui_grid_one_bind_aria_label: 'aria.pageBack'}
+      %a{href: '', ng_click: 'pagePreviousPageClick()'}
+        %i.icon-left-open-big
+    %li
+      %input{type: 'number', ui_grid_one_bind_title: 'aria.pageSelected', ui_grid_one_bind_aria_label: 'aria.pageSelected', ng_model: 'grid.options.paginationCurrentPage', min: '1', max: '{{ paginationApi.getTotalPages() }}', required: true}
+    %li{ng_show: 'paginationApi.getTotalPages() > 0'} / {{paginationApi.getTotalPages()}}
+    %li{ng_class: '{disabled: cantPageForward()}', role: 'menuitem', ui_grid_one_bind_title: 'aria.pageBack', ui_grid_one_bind_aria_label: 'aria.pageBack'}
+      %a{href: '', ng_click: 'pageNextPageClick()'}
+        %i.icon-right-open-big
+    %li{ng_if: 'grid.options.paginationPageSizes.length > 1'}
+      %select{ui_grid_one_bind_aria_labelledby_grid: "'items-per-page-label'", ng_model: 'grid.options.paginationPageSize', ng_options: 'o as o for o in grid.options.paginationPageSizes'}
+    %li
+      %span{ui_grid_one_bind_id_grid: "'items-per-page-label'"}
+        &nbsp;{{sizesLabel}}
+  %span{ng_show: 'grid.options.totalItems > 0'}
+    {{showingLow}} - {{showingHigh}} {{::paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}

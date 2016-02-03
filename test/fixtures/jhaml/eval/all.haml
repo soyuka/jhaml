@@ -1,0 +1,42 @@
+!!!
+%div.search-container
+  %input.action-sheet-container.class2{type: 'search', ng_value: 'value'}
+  #search-results.foo{zf_action_sheet: true, class: 'bar'}
+    %div{zf_as_content: true, position: 'bottom'}
+      %ul
+        %li{ng_repeat: 'result in results', 
+          ng_class: '{active: results[index] == result}',
+          ng_click: 'selectResult(results.indexOf(result))'} 
+          %a {{result.text}}
+    %span
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+      tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+      vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+      no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    %label.middle
+      %strong price
+      %span 0.131 &euro;
+    -# HAML comment
+      this should not be printed
+        neither should this
+%p
+  \ %p escape
+  \   %div
+  The following has an html comment
+  / this is an html comment
+    this too btw
+  hidden in the text
+%p!= 'this will not be <strong>encoded</strong>' 
+%p= 'this will be <strong>encoded</strong>' 
+/[if IE>5]
+  %noscript holy shit a conditional comment, are we in 2016 yet?
+
+%select{disabled: disabled === true}
+  - for(let i in select)
+    %option{value: select[i].value}= select[i].text
+
+%p Variable #{interpolated}
+!= test
+= test
+&= 'this & is encoded'
+& this works #{'this & is encoded'} too, so is #{'this <script>'}

@@ -1,0 +1,15 @@
+Name
+        hamltohtml - Basic Hml To Html (no code evaluation)
+
+Synopsis
+        hamltohtml [ destination ]
+
+Description
+
+        Transform :
+
+        hamltohtml < data.haml > data.html
+
+        Or 
+        
+        hamltohtml < data.haml data.html

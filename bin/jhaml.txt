@@ -1,0 +1,17 @@
+Name
+        jhaml - Haml to html (javascript evaluation)
+
+Synopsis
+        jhaml [ destination ] [ scope ] [ --eval ] 
+
+Description
+        Transform :
+
+        jhaml < data.haml > data.html
+
+        Or for code interpretion :
+        
+        jhaml < data.haml '{"some": "json"}' --eval
+
+Options
+        --eval         Eval the code

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<div class="search-container">
+  <input type='search' ng_value='value' class="action-sheet-container class2" />
+  <div zf_action_sheet="true" class='foo bar' id="search-results">
+    <div zf_as_content="true" position='bottom'>
+      <ul>
+        <li ng_repeat='result in results'  ng_class='{active: results[index] == result}' ng_click='selectResult(results.indexOf(result))'>
+          <a>{{result.text}}</a>
+        </li>
+      </ul>
+    </div>
+    <span> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+ no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    </span>
+    <label class="middle">
+      <strong>price</strong>
+      <span>0.131 &euro;</span>
+    </label>
+  </div>
+</div>
+<p>
+ %p escape
+ %div The following has an html comment
+  <!-- this is an html comment this too btw--> hidden in the text
+</p>
+<p>this will not be <strong>encoded</strong></p>
+<p>this will be &lt;strong&gt;encoded&lt;/strong&gt;</p>
+<!--[if IE>5]>
+  <noscript>holy shit a conditional comment, are we in 2016 yet?</noscript>
+<![endif]-->
+<select disabled="true">
+    <option value="0">Zero</option>
+    <option value="1">One</option>
+</select>
+<p>Variable Test</p>
+&<>
+&amp;&lt;&gt;
+this &amp; is encoded
+ this works this &amp; is encoded too, so is this &lt;script&gt;

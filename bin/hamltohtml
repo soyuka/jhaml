@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict'
 const args = require('minimist')(process.argv.slice(2))
-const HamlToHtml = require('../lib/HamlToHtml.js')
+const Parser = require('../lib/Parser.js')
 const fs = require('fs')
 
 if(args.help || args.h) {
@@ -11,7 +11,17 @@ if(args.help || args.h) {
   return
 }
 
-let hamltohtml = new HamlToHtml({}, {disabled: true})
+let Javascript = require('../lib/engines/Javascript.js')
+let Push = require('../lib/engines/Push.js')
+let Eval = require('../lib/engines/Eval.js')
+
+let hamltohtml = new Parser({engine: [new Javascript(), new Eval()]}, {
+  disabled: true, 
+  select: [{value: 0, text: 'Zero'}, {value: 1, text: 'One'}],
+  interpolated: 'Test',
+  test: '&<>'
+})
+
 let output = process.stdout
 
 if(args._[0]) {

@@ -1,7 +1,7 @@
 !!!
 %div.search-container
   %input.action-sheet-container.class2{type: 'search', ng_value: 'value'}
-  #search-results{zf_action_sheet: true}
+  #search-results.foo{zf_action_sheet: true, class: 'bar'}
     %div{zf_as_content: true, position: 'bottom'}
       %ul
         %li{ng_repeat: 'result in results', ng_class: '{active: results[index] == result}', ng_click: 'selectResult(results.indexOf(result))'} 
@@ -29,8 +29,12 @@
 /[if IE>5]
   %noscript holy shit a conditional comment, are we in 2016 yet?
 
--# %select{disabled: disabled === true}
--#   - for(let i in select)
--#     %option{value: select[i].value}= select[i].text
+%select{disabled: disabled === true}
+  - for(let i in select)
+    %option{value: select[i].value}= select[i].text
 
 %p Variable #{interpolated}
+!= test
+= test
+&= 'this & is encoded'
+& this works #{'this & is encoded'} too, so is #{'this <script>'}

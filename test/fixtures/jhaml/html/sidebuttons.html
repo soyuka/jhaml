@@ -1,0 +1,8 @@
+<li class="has-form">
+  <ul class="button-group">
+    <nav_button ng-repeat='sidenavButton in sidenavButtons' ng-nav-click='{{sidenavButton.click}}'>
+      <span class='button tiny {{sidenavButton.class}}' ng_bind_html='sidenavButton.content'>
+      </span>
+    </nav_button>
+  </ul>
+</li>

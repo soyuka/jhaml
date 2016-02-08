@@ -3,6 +3,7 @@ const jhaml = require('../')
 const fs = require('fs')
 const p = require('path')
 const assert = require('assert')
+const es = require('event-stream')
 
 const jhamlfixtures = `${__dirname}/fixtures/jhaml`
 const hamljsfixtures = `${__dirname}/fixtures/haml.js`
@@ -72,7 +73,10 @@ describe('jhaml', function() {
   test('html/conditionalcomment') 
   test('html/escape') 
   test('html/elements') 
+  test('html/attributes') 
+  test('html/attributes.boolean') 
   test('html/htmlcomment') 
+  test('html/sidebuttons') 
   test('html/errors/indent') 
   test('html/errors/invalid') 
   test('eval/encode', {eval: true}) 
@@ -84,16 +88,36 @@ describe('jhaml', function() {
 })
 
 describe('haml.js', function() {
-  function test(path, opts) {
-    it('should ' + path, equal(path, opts)) 
+  let list = fs.readdirSync(hamljsfixtures)
+  for(let i in list) {
+    if(p.extname(list[i]) !== '.haml')
+      continue
+
+    let path = `${p.basename(list[i], '.haml')}`
+
+    it('should ' + path, equal(path, {fixtures: hamljsfixtures, eval: true}))
   }
+})
 
-  fs.readdir(hamljsfixtures, function(err, list) {
-    for(let i in list) {
-      if(p.extname(list[i]) !== '.haml')
-        continue
+describe('stream', function() {
 
-      test(`${p.basename(list[i], '.haml')}`, {fixtures: hamljsfixtures, eval: true})
-    }
+  it('should get a stream flow', function(cb) {
+    let stream = jhaml.tohtml()
+
+    let read = es.readArray(['.test', '\n   %p'])
+
+    read.pipe(stream)
+
+    let html = []
+
+    stream.on('data', function(c) {
+      html.push(c)
+    })
+
+    stream.on('end', function() {
+      html = Buffer.concat(html)
+      assert(html.equals(fs.readFileSync(`${__dirname}/fixtures/jhaml/stream.html`)))
+      cb()
+    })
   })
 })

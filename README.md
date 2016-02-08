@@ -1,10 +1,18 @@
-# JHAML
+# JHAML 
+
+[![Build Status](https://travis-ci.org/soyuka/jhaml.svg?branch=master)](https://travis-ci.org/soyuka/jhaml)
 
 Note: Currently a work in progress, filters are not available yet
 
 Lazy? [Jump to usage](https://github.com/soyuka/jhaml#usage)
 
 ## Introduction
+
+jHaml stands for Javascript Haml. I'm using scoped packages:
+
+```
+npm install @soyuka/jhaml
+```
 
 ### Why another HAML implementation?
 
@@ -123,6 +131,29 @@ This script runs the [tj/haml.js](https://github.com/tj/haml.js) test suite exce
 
 ## Usage
 
+```
+npm install -g @soyuka/jhaml
+```
+
+Programmaticaly, `jhaml` gives you two parameters : 
+- the scope
+- options
+
+For example:
+
+```javascript
+const jhaml = require('jhaml')
+const fs = require('fs')
+const scope = {foo: 'bar'}
+
+fs.createReadStream(`source.haml`)
+.pipe(jhaml(scope, {attributes_separator: '_'}))
+```
+
+Current available options are:
+- `attributes_separator` (string): a separator for embed attributes. Default to `-`, `{ng: {click: 'test()', if: 'available'}}` will render `ng-click="test()" ng-if: "available"`
+- `eval` (boolean): Only available with the Javascript engine (ie when using code interpretation). If set to false, it'll output javascript instead of html.
+
 ### With code interpretation
 
 #### CLI
@@ -180,4 +211,21 @@ fs.createReadStream(`source.haml`)
 
 ### Gulp
 
+[See here for the full documentation](https://github.com/soyuka/gulp-jhaml)
 
+```
+npm install @soyuka/gulp-jhaml --save-dev
+```
+
+```javascript
+gulp.task('haml', ['haml:clean'], function() {
+  return gulp.src(['./client/haml/**/*.haml'])
+    .pipe(haml({}, {eval: false}))
+    .on('error', function(err) {
+      console.error(err.stack) 
+    })
+    .pipe(gulp.dest('./html'))
+})
+```
+
+Need another implementation? Please get in touch.

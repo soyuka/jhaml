@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <div class="search-container">
   <input type='search' ng_value='value' class="action-sheet-container class2" />
-  <div zf_action_sheet="true" class='foo bar' id="search-results">
-    <div zf_as_content="true" position='bottom'>
+  <div zf_action_sheet class='foo bar' id="search-results">
+    <div zf_as_content position='bottom'>
       <ul>
-        <li ng_repeat='result in results'  ng_class='{active: results[index] == result}' ng_click='selectResult(results.indexOf(result))'>
+        <li ng_repeat='result in results' ng_class='{active: results[index] == result}' ng_click='selectResult(results.indexOf(result))'>
           <a>{{result.text}}</a>
         </li>
       </ul>

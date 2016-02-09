@@ -1,6 +1,6 @@
 {
   "name": "@soyuka/jhaml",
-  "version": "1.0.1-alpha",
+  "version": "1.0.2-alpha",
   "description": "Javascript Haml",
   "main": "index.js",
   "repository": {

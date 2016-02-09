@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/soyuka/jhaml.svg?branch=master)](https://travis-ci.org/soyuka/jhaml)
 
-Note: Currently a work in progress, filters are not available yet
+Note: Currently a work in progress, filters are not available yet amongst [some features](https://github.com/soyuka/jhaml#todo).
 
 Lazy? [Jump to usage](https://github.com/soyuka/jhaml#usage)
 
@@ -16,7 +16,7 @@ npm install @soyuka/jhaml
 
 ### Why another HAML implementation?
 
-Because I wanted a streamable HAML implementation. Also, some things didn't work on javascript implementation as they should in comparison to the ruby version. 
+Because I wanted a streamable HAML implementation. Also, some things didn't work on javascript implementation as they should in comparison to the ruby version (which I was still using with gulp!). 
 
 For example:
 ```haml
@@ -24,11 +24,18 @@ For example:
   attr2: 'two'} some content
 ```
 
-Or errors thrown for no obvious reasons:
+Errors thrown for no obvious reasons:
 
 ```haml
 %div test
   test
+```
+
+What about this syntax:
+
+```haml
+%div{ng: {click: 'test()', if: 'ok === true'}}
+-# Results in <div ng_click="test()" ng_if="ok === true">, the `_` separator can be configured
 ```
 
 Also, I almost never need code interpretation inside HAML but I instead write html templates to be used by angular. This is why this parser provides two different streaming engines:
@@ -146,13 +153,25 @@ const jhaml = require('jhaml')
 const fs = require('fs')
 const scope = {foo: 'bar'}
 
-fs.createReadStream(`source.haml`)
+fs.createReadStream('source.haml')
 .pipe(jhaml(scope, {attributes_separator: '_'}))
 ```
 
 Current available options are:
-- `attributes_separator` (string): a separator for embed attributes. Default to `-`, `{ng: {click: 'test()', if: 'available'}}` will render `ng-click="test()" ng-if: "available"`
+- `attributes_separator` (string): a separator for embed attributes. Default to `-`.
 - `eval` (boolean): Only available with the Javascript engine (ie when using code interpretation). If set to false, it'll output javascript instead of html.
+
+The attributes separator is only used when parsing recursive attributes:
+
+```haml
+%div{ng: {click: 'test()', if: 'available'}}
+```
+
+will render:
+
+```html
+<div ng-click="test()" ng-if="available"></div>
+```
 
 ### With code interpretation
 
@@ -185,7 +204,7 @@ const jhaml = require('jhaml')
 const fs = require('fs')
 const scope = {foo: 'bar'}
 
-fs.createReadStream(`source.haml`)
+fs.createReadStream('source.haml')
 .pipe(jhaml(scope))
 ```
 
@@ -205,7 +224,7 @@ const jhaml = require('jhaml')
 const fs = require('fs')
 const scope = {foo: 'bar'}
 
-fs.createReadStream(`source.haml`)
+fs.createReadStream('source.haml')
 .pipe(jhaml.tohtml(scope))
 ```
 

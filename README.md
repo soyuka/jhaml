@@ -228,4 +228,8 @@ gulp.task('haml', ['haml:clean'], function() {
 })
 ```
 
+### Express
+
+[See here](https://github.com/soyuka/jhaml/blob/master/test/express.js)
+
 Need another implementation? Please get in touch.

@@ -75,6 +75,7 @@ describe('jhaml', function() {
   test('html/elements') 
   test('html/attributes') 
   test('html/attributes.boolean') 
+  test('html/attributes.empty') 
   test('html/htmlcomment') 
   test('html/sidebuttons') 
   test('html/errors/indent') 

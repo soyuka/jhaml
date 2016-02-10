@@ -1,69 +1,48 @@
 # Benchmarks
 
-Against `tj/haml.js` and `creationix/hamljs`. Note that I had to hard fix a `Cannot call substr of undefined` error in `creationix/hamljs`.
-
-
 ## Run
 
 ```
-git clone https://github.com/tj/haml.js
-git clone https://github.com/creationix/haml-js
 npm install benchmark 
-node suite.js
-# or
-npm install bench
-node bench.js
+node streamsuite.js
+node algorithm.js
 ```
 
 ## Results
 
-I'm really wondering where tj see's a 65% speed improvement when compared to `haml-js` but whatever. This library has not been built for speed, but it's performances are basically the same as the others.
+Wait! Note that `jhaml` is an asynchronous stream. I could compare algorithms with other haml implementations but I'm not sure it would reflect the reality. Indeed, they have been built with a goal in mind, here the goal is a fluent HTML output stream from an HAML input.
 
 ```
-{ http_parser: '2.6.0',
-  node: '5.3.0',
-  v8: '4.6.85.31',
-  uv: '1.8.0',
-  zlib: '1.2.8',
-  ares: '1.10.1-DEV',
-  icu: '56.1',
-  modules: '47',
-  openssl: '1.0.2e' }
-Scores: (bigger is better)
-
-jhaml
-Raw:
- > 167.4975074775673
- > 167.66467065868264
- > 167.66467065868264
- > 167.4975074775673
-Average (mean) 167.58108906812498
-
-haml.js
-Raw:
- > 167.33067729083666
- > 167.33067729083666
- > 167.33067729083666
- > 166.66666666666666
-Average (mean) 167.16467463479415
-
-haml-js
-Raw:
- > 166.33466135458167
- > 166.33466135458167
- > 166.50049850448653
- > 166.50049850448653
-Average (mean) 166.4175799295341
-
-Winner: jhaml
-Compared with next highest (haml.js), it's:
-0.25% faster
-1 times as fast
-0 order(s) of magnitude faster
-BASICALLY THE SAME
-
-Compared with the slowest (haml-js), it's:
-0.69% faster
-1.01 times as fast
-0 order(s) of magnitude faster
+jhaml x 506 ops/sec ±4.63% (74 runs sampled)
+jhamltohtml x 628 ops/sec ±7.98% (80 runs sampled)
+jhamltojavascript x 714 ops/sec ±2.10% (82 runs sampled)
+Fastest is jhamltojavascript
+Slowest is jhaml
 ```
+
+You'll note that as `jhamltohtml` is doing more `.push` than `jhamltojavascript`, it will behave "slower". But, `jhamltojavascript` is keeping the content in memory, which can have an bad impact on big data.
+
+`jhaml` is compiling the javascript, no suprise here, it should be slower.
+
+> `processLine` is the heart method of JHAML which processes an haml line and parses it.
+
+In the following:
+- the constructor is called
+- `processLine` is called manually with a buffer
+- `_flush` is called so that the javascript compilation takes place
+
+The last test is calling the constructor once and then only calling `processLine`. It's reflecting what's happening when processing a large file.
+
+```
+jhaml (construct + processLine + flush) x 1,297 ops/sec ±17.87% (64 runs sampled)
+jhamltohtml (construct + processLine + flush) x 6,682 ops/sec ±5.66% (69 runs sampled)
+jhamltojavascript (construct + processLine + flush) x 6,777 ops/sec ±5.55% (72 runs sampled)
+jhamltohtml (construct + processLine) x 7,580 ops/sec ±4.67% (81 runs sampled)
+jhamltohtml (processLine) x 13,081 ops/sec ±6.49% (75 runs sampled)
+Fastest is jhamltohtml (processLine)
+Slowest is jhaml (construct + processLine + flush)
+
+```
+
+Again, no surprise there. First, we can feel that the `javascript` engine takes more time than the simple `html` engine. Then, we see the impact of compiling which reduces the number of ops/sec drastically.
+Of course, the main function (`processLine`) is doing just fine on it's own with 13k ops/sec. Also, it shows us that calling the constructor is heavy.

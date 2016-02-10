@@ -233,3 +233,9 @@ gulp.task('haml', ['haml:clean'], function() {
 [See here](https://github.com/soyuka/jhaml/blob/master/test/express.js)
 
 Need another implementation? Please get in touch.
+
+## Todo
+
+- filters
+- multi line (`|`)
+- support other attributes forms? `:attr => value`, array value, `(type="test")`. needed?

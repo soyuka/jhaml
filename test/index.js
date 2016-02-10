@@ -15,6 +15,8 @@ const scope = {
   test: '&<>',
   message: 'it works!',
   stuff: 'just fine!',
+  link: 'link',
+  suffix: 'suffix',
   method: function(foo) { return 'bar'; }
 }
 
@@ -78,11 +80,13 @@ describe('jhaml', function() {
   test('html/attributes.empty') 
   test('html/htmlcomment') 
   test('html/sidebuttons') 
+  test('html/whitespace') 
   test('html/errors/indent') 
   test('html/errors/invalid') 
   test('eval/encode', {eval: true}) 
   test('eval/execute', {eval: true}) 
   test('eval/switch', {eval: true}) 
+  test('eval/whitespace', {eval: true}) 
   test('eval/interpolate', {eval: true}) 
   test('eval/errors/undefined', {error: true, eval: true}) 
   test('eval/all', {eval: true}) 

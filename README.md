@@ -4,6 +4,8 @@
 
 Note: Currently a work in progress, filters are not available yet amongst [some features](https://github.com/soyuka/jhaml#todo).
 
+![gulp-ruby-haml vs jhaml](https://pbs.twimg.com/media/Ca7dBSAWIAAPkz_.png:large)
+
 Lazy? [Jump to usage](https://github.com/soyuka/jhaml#usage)
 
 ## Introduction

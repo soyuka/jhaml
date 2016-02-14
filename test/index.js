@@ -76,6 +76,7 @@ describe('jhaml', function() {
   test('html/escape') 
   test('html/elements') 
   test('html/attributes') 
+  test('html/attributes.angular2') 
   test('html/attributes.boolean') 
   test('html/attributes.empty') 
   test('html/htmlcomment') 

@@ -1,0 +1,7 @@
+<form *ngIf='tree' [ngFormModel]='treeForm' class="large-12 columns">
+<ul class="breadcrumbs">
+  <li *ngFor='#bc of breadcrumb'>
+    <a (click)='navigate({path: bc.path})'>{{bc.name}}</a>
+  </li>
+</ul>
+</form>

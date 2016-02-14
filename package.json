@@ -1,6 +1,6 @@
 {
   "name": "@soyuka/jhaml",
-  "version": "1.0.3-alpha",
+  "version": "1.0.4-alpha",
   "description": "Stream HAML to HTML",
   "main": "index.js",
   "repository": {

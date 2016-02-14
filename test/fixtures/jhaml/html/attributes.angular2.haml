@@ -1,0 +1,5 @@
+%form.large-12.columns{'*ngIf': 'tree', '[ngFormModel]': 'treeForm'}
+%ul.breadcrumbs
+  %li{'*ngFor': '#bc of breadcrumb'}
+    %a{'(click)': 'navigate({path: bc.path})'} {{bc.name}}
+

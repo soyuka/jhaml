@@ -84,6 +84,8 @@ describe('jhaml', function() {
   test('html/whitespace') 
   test('html/errors/indent') 
   test('html/errors/invalid') 
+  test('html/quoteinsidequote') 
+  test('html/attributes.numbers') 
   test('eval/encode', {eval: true}) 
   test('eval/execute', {eval: true}) 
   test('eval/switch', {eval: true}) 

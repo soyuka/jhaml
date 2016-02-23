@@ -1,7 +1,10 @@
 %form.large-12.columns{'*ngIf': 'tree', '[ngFormModel]': 'treeForm'}
-%ul.breadcrumbs
-  %li{'*ngFor': '#bc of breadcrumb'}
-    %a{'(click)': 'navigate({path: bc.path})'} {{bc.name}}
-%p
-  {{some}}
-  {{data}}
+  %ul.breadcrumbs
+    %li{'*ngFor': '#bc of breadcrumb'}
+      %a{'(click)': 'navigate({path: bc.path})'} {{bc.name}}
+  %p
+    {{some}}
+    {{data}}
+  %i.right.text-right.small
+    %a{ui_sref: 'job.events({key: activity.item.key})'} {{activity.item.name}}
+    {{activity.time | fromNow}} ({{activity.time | moment: 'ddd D MMM YYYY HH:mm:ss'}})

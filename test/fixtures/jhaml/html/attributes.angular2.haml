@@ -2,4 +2,6 @@
 %ul.breadcrumbs
   %li{'*ngFor': '#bc of breadcrumb'}
     %a{'(click)': 'navigate({path: bc.path})'} {{bc.name}}
-
+%p
+  {{some}}
+  {{data}}

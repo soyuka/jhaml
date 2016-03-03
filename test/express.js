@@ -44,13 +44,4 @@ app.get('/', function(req, res, next) {
  return res.render('all', res.locals)
 })
 
-app.get('/test2', function(req, res, next) {
-
-  let engine = jhaml(res.locals) 
-
-  fs.createReadStream(app.get('views') + '/all.haml')
-  .pipe(engine)
-  .pipe(res)
-})
-
 app.listen(3002)

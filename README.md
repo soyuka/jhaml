@@ -251,9 +251,7 @@ gulp.task('haml', ['haml:clean'], function() {
 
 ### Express
 
-[See here](https://github.com/soyuka/jhaml/blob/master/test/express.js)
-
-Need another implementation? Please get in touch.
+[See here](https://github.com/soyuka/jhaml/blob/master/test/express.js) or [here with caching abilities](https://github.com/soyuka/jhaml/blob/master/test/benchmark/express.js#L92)
 
 ## Todo
 

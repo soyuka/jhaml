@@ -10,7 +10,22 @@ const Readable = require('stream').Readable
 app.set('views', `${__dirname}/../fixtures/jhaml/eval`)
 
 app.engine('.haml', function(str, options, fn) {
-  fn(null, '')
+  let engine = jhaml(options)
+  fs.createReadStream(str)
+  .pipe(engine)
+  
+  let chunks = []
+  engine.on('data', function(str) {
+    chunks.push(str)
+  })
+
+  engine.on('error', function(err) {
+    fn(err)
+  })
+
+  engine.on('end', function() {
+    fn(null, Buffer.concat(chunks).toString())
+  })
 })
 
 app.set('view engine', 'haml')

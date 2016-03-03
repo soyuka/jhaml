@@ -4,7 +4,7 @@ const fs = require('fs')
 const services = {
   server1: "http://localhost:3002/"
 };
-const routes = { cached: 'cached', pipe: 'pipe' };
+const routes = { cached: 'cached', pipe: 'pipe', render: '' };
 const options = { debug: true, minSamples: 1000, maxTime: Infinity };
 
 apiBenchmark.measure(services, routes, options, function(err, results){

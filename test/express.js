@@ -27,8 +27,8 @@ app.engine('.haml', function(str, options, fn) {
 
 app.set('view engine', 'haml')
 
-app.get('/', function(req, res, next) {
- return res.render('all', {
+app.use(function(req, res, next) {
+  res.locals = {
     disabled: true, 
     select: [{value: 0, text: 'Zero'}, {value: 1, text: 'One'}],
     interpolated: 'Test',
@@ -36,7 +36,21 @@ app.get('/', function(req, res, next) {
     message: 'it works!',
     stuff: 'just fine!',
     method: function(foo) { return 'bar'; }
-  })
+  }
+  next()
+})
+
+app.get('/', function(req, res, next) {
+ return res.render('all', res.locals)
+})
+
+app.get('/test2', function(req, res, next) {
+
+  let engine = jhaml(res.locals) 
+
+  fs.createReadStream(app.get('views') + '/all.haml')
+  .pipe(engine)
+  .pipe(res)
 })
 
 app.listen(3002)

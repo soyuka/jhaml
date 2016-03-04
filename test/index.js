@@ -129,4 +129,52 @@ describe('stream', function() {
       cb()
     })
   })
+
+  it('should get a stream flow (js)', function(cb) {
+    let stream = jhaml({}, {eval: false})
+
+    let read = es.readArray(['.test', '\n   %p'])
+
+    read.pipe(stream)
+
+let result = `
+'use strict';
+var __html = '';
+__html += \`<div class="test">\`;
+__html += \`\\n   <p>\`;
+__html += \`\\n   </p>\`;
+__html += \`\\n</div>\`;`
+
+    let html = []
+
+    stream.on('data', function(c) {
+      html.push(c)
+    })
+
+    stream.on('end', function() {
+      html = Buffer.concat(html)
+      assert(html.toString() == result)
+      cb()
+    })
+  })
+
+  it('should get a stream flow (normal)', function(cb) {
+    let stream = jhaml({})
+
+    let read = es.readArray(['.test', '\n   %p'])
+
+    read.pipe(stream)
+
+    let html = []
+
+    stream.on('data', function(c) {
+      html.push(c)
+    })
+
+    stream.on('end', function() {
+      html = Buffer.concat(html)
+      assert(html.equals(fs.readFileSync(`${__dirname}/fixtures/jhaml/stream.html`)))
+      cb()
+    })
+  })
 })

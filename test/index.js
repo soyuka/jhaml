@@ -60,7 +60,9 @@ var equal = function(path, opts) {
           throw e
         }
 
-        done()
+        if(!opts.error) {
+          done()
+        }
       })
     })
   }
@@ -93,6 +95,8 @@ describe('jhaml', function() {
   test('eval/whitespace', {eval: true}) 
   test('eval/interpolate', {eval: true}) 
   test('eval/errors/undefined', {error: true, eval: true}) 
+  test('eval/errors/syntaxerror', {error: true, eval: true}) 
+  test('eval/errors/anothererror', {error: true, eval: true}) 
   test('eval/all', {eval: true}) 
 })
 
@@ -139,6 +143,7 @@ describe('stream', function() {
 
 let result = `
 'use strict';
+for(let i in scope) { if(!global[i]) { global[i] = scope[i]; }}
 var __html = '';
 __html += \`<div class="test">\`;
 __html += \`\\n   <p>\`;
